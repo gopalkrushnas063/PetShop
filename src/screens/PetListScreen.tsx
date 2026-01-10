@@ -26,7 +26,7 @@ type PetListScreenNavigationProp = NativeStackNavigationProp<
 const PetListScreen = () => {
   const navigation = useNavigation<PetListScreenNavigationProp>();
   const isFocused = useIsFocused();
-  const { pets, addToCart, fetchPets, loading, error } = useStore();
+  const { pets, addToCart, fetchPets, loading, error, cart } = useStore(); // Added cart
   const [refreshing, setRefreshing] = useState(false);
 
   // Fetch pets when screen is focused
@@ -85,6 +85,13 @@ const PetListScreen = () => {
     );
   }
 
+  // Calculate total items in cart
+  const getCartItemCount = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const cartItemCount = getCartItemCount();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -93,16 +100,20 @@ const PetListScreen = () => {
           style={styles.cartButton}
           onPress={() => navigation.navigate('Cart')}
         >
-          <Image
-            source={require('../assets/images/shopping_cart.png')}
-            style={{
-              width: 24,
-              height: 24,
-              tintColor: '#2196F3',
-              marginRight: 10,
-            }}
-            resizeMode="contain"
-          />
+          <View style={styles.cartIconContainer}>
+            <Image
+              source={require('../assets/images/shopping_cart.png')}
+              style={styles.cartIcon}
+              resizeMode="contain"
+            />
+            {cartItemCount > 0 && (
+              <View style={styles.cartBadge}>
+                <Text style={styles.cartBadgeText}>
+                  {cartItemCount > 99 ? '99+' : cartItemCount}
+                </Text>
+              </View>
+            )}
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -110,11 +121,7 @@ const PetListScreen = () => {
         <View style={styles.emptyState}>
           <Image
             source={require('../assets/images/no-animals.png')}
-            style={{
-              width: 90,
-              height: 90,
-              tintColor: '#B0BEC5',
-            }}
+            style={styles.emptyStateIcon}
             resizeMode="contain"
           />
           <Text style={styles.emptyStateText}>No pets available</Text>
@@ -127,11 +134,7 @@ const PetListScreen = () => {
           >
             <Image
               source={require('../assets/images/pets.png')}
-              style={{
-                width: 20,
-                height: 20,
-                tintColor: '#FFFFFF',
-              }}
+              style={styles.addButtonIcon}
               resizeMode="contain"
             />
             <Text style={styles.addButtonText}>Add New Pet</Text>
@@ -224,6 +227,31 @@ const styles = StyleSheet.create({
   cartButton: {
     padding: 8,
   },
+  cartIconContainer: {
+    position: 'relative',
+  },
+  cartIcon: {
+    width: 24,
+    height: 24,
+    tintColor: '#2196F3',
+  },
+  cartBadge: {
+    position: 'absolute',
+    top: -12,
+    right: -7,
+    backgroundColor: '#FF3B30',
+    borderRadius: 10,
+    minWidth: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
+  cartBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
   list: {
     padding: 15,
   },
@@ -238,6 +266,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+  },
+  emptyStateIcon: {
+    width: 90,
+    height: 90,
+    tintColor: '#B0BEC5',
   },
   emptyStateText: {
     fontSize: 24,
@@ -259,6 +292,11 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
+  },
+  addButtonIcon: {
+    width: 20,
+    height: 20,
+    tintColor: '#FFFFFF',
   },
   addButtonText: {
     color: '#FFFFFF',
