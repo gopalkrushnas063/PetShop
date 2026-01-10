@@ -20,3 +20,18 @@ export interface PetFormData {
   price: string;
   image: string;
 }
+
+export interface OrderDetails {
+  orderId: string;
+  orderDate: Date;
+  totalAmount: number;
+  itemsCount: number;
+  shippingAddress?: string;
+  paymentMethod?: string;
+}
+
+export interface OrderItem {
+  pet: Pet;
+  quantity: number;
+  price: number;
+}

@@ -8,11 +8,20 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native'; // Add this import
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'; // Add this import
 import { useStore } from '../store/useStore';
+import { RootStackParamList } from '../../App'; // Add this import
+
+// Add this type definition
+type CartScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Cart'
+>;
 
 const CartScreen = () => {
-  const { cart, removeFromCart, updateCartQuantity, clearCart } = useStore();
+  const navigation = useNavigation<CartScreenNavigationProp>(); // Add this line
+  const { cart, removeFromCart, updateCartQuantity, clearCart } = useStore(); // Keep only this line - remove the duplicate
 
   const handleRemoveItem = (petId: string, petName: string) => {
     Alert.alert(
@@ -163,7 +172,18 @@ const CartScreen = () => {
               </Text>
             </View>
 
-            <TouchableOpacity style={styles.checkoutButton}>
+            {/* Updated Checkout Button */}
+            <TouchableOpacity 
+              style={[styles.checkoutButton, cart.length === 0 && styles.checkoutButtonDisabled]}
+              onPress={() => {
+                if (cart.length === 0) {
+                  Alert.alert('Empty Cart', 'Your cart is empty. Add some pets first!');
+                  return;
+                }
+                navigation.navigate('OrderConfirmation');
+              }}
+              disabled={cart.length === 0}
+            >
               <Image
                 source={require('../assets/images/shopping_cart.png')}
                 style={{
@@ -312,6 +332,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#4CAF50',
     paddingVertical: 16,
     borderRadius: 8,
+  },
+  checkoutButtonDisabled: {
+    backgroundColor: '#A5D6A7',
+    opacity: 0.7,
   },
   checkoutButtonText: {
     color: '#FFFFFF',
