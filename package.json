@@ -23,7 +23,7 @@
     "react-native-gesture-handler": "^2.30.0",
     "react-native-image-picker": "^8.1.2",
     "react-native-safe-area-context": "^5.5.2",
-    "react-native-screens": "^3.31.1",
+    "react-native-screens": "^4.19.0",
     "react-native-toast-message": "^2.2.0",
     "react-native-vector-icons": "^10.3.0",
     "zod": "^3.24.1",

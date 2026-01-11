@@ -1,97 +1,289 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# PetShop - Pet Store Mobile Application
 
-# Getting Started
+## 📱 Overview
+PetShop is a React Native mobile application for managing a pet store. It allows users to browse available pets, add new pets with images, manage shopping carts, and complete purchases.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 🚀 Features
+- **Pet Management**: View, add, and manage pet listings
+- **Shopping Cart**: Add pets to cart, adjust quantities, and checkout
+- **Image Upload**: Upload pet images from camera, gallery, or random dog API
+- **Form Validation**: Robust form validation with Zod schema
+- **State Management**: Centralized state management with Zustand
+- **Responsive UI**: Fully responsive design across different screen sizes
+- **Order Confirmation**: Complete order flow with confirmation screen
 
-## Step 1: Start Metro
+## 🛠️ Tech Stack
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### Core Framework
+- **React Native** (0.72.0+) - Cross-platform mobile framework
+- **TypeScript** - Type-safe JavaScript
+- **React Navigation** - Navigation between screens
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### State Management
+- **Zustand** - Lightweight state management
+- **React Hook Form** - Form state management
+- **Zod** - Schema validation
 
-```sh
-# Using npm
-npm start
+### UI & Styling
+- **React Native Vector Icons** - Icon library
+- **React Native Safe Area Context** - Safe area handling
+- **React Native Toast Message** - Toast notifications
 
-# OR using Yarn
-yarn start
+### API & Networking
+- **Axios** - HTTP client
+- **Mock API Integration** - External API for pet data
+- **Dog CEO API** - Random dog images
+
+### Image Handling
+- **React Native Image Picker** - Camera and gallery access
+- **React Native Gesture Handler** - Gesture support
+
+### Development Tools
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+
+## 📁 Project Structure
+
+```
+PetShop/
+├── src/
+│   ├── assets/
+│   │   ├── images/          # App images and icons
+│   │   └── imageMap.ts      # Image mapping utility
+│   ├── components/
+│   │   └── PetCard.tsx      # Reusable pet card component
+│   ├── screens/
+│   │   ├── HomeScreen.tsx   # Home dashboard
+│   │   ├── AddPetScreen.tsx # Add pet form
+│   │   ├── PetListScreen.tsx# Browse pets
+│   │   ├── CartScreen.tsx   # Shopping cart
+│   │   └── OrderConfirmationScreen.tsx # Order confirmation
+│   ├── services/
+│   │   └── api.ts           # API service layer
+│   ├── store/
+│   │   └── useStore.ts      # Zustand store
+│   ├── schemas/
+│   │   └── petSchema.ts     # Zod validation schemas
+│   └── types/
+│       └── index.ts         # TypeScript type definitions
+├── App.tsx                  # Main app component
+├── index.js                 # App entry point
+└── package.json             # Dependencies
 ```
 
-## Step 2: Build and run your app
+## 🏗️ Architecture
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+### 1. **Component Architecture**
 ```
+App (Root)
+├── Navigation Container
+├── Stack Navigator
+│   ├── HomeScreen
+│   ├── AddPetScreen
+│   ├── PetListScreen
+│   ├── CartScreen
+│   └── OrderConfirmationScreen
+└── Toast Container
+```
+
+### 2. **State Management Flow**
+```
+UI Components → Actions → Zustand Store → State Updates → UI Re-render
+```
+
+### 3. **Data Flow**
+```
+User Input → Form Validation → API Call → State Update → UI Update
+```
+
+### 4. **Navigation Flow**
+```
+Splash → Home → [AddPet, PetList, Cart] → OrderConfirmation
+```
+
+## 🔧 Installation & Setup
+
+### Prerequisites
+- Node.js (v16+)
+- npm or yarn
+- React Native CLI
+- iOS Simulator (Mac) or Android Studio (Android)
+
+### Step 1: Clone the Repository
+```bash
+git clone <repository-url>
+cd PetShop
+```
+
+### Step 2: Install Dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+### Step 3: Install iOS Dependencies (Mac only)
+```bash
+cd ios && pod install && cd ..
+```
+
+### Step 4: Configure Environment
+Create a `.env` file in the root directory (if needed):
+```env
+MOCK_API_URL=https://69627558d9d64c761907f422.mockapi.io/pets
+DOG_API_URL=https://dog.ceo/api
+```
+
+### Step 5: Run the Application
+
+#### iOS
+```bash
+npx react-native run-ios
+# or for specific simulator
+npx react-native run-ios --simulator="iPhone 14"
+```
+
+#### Android
+```bash
+npx react-native run-android
+```
+
+#### Development Server
+```bash
+npx react-native start
+```
+
+## 📱 Platform Support
 
 ### iOS
+- **Minimum Version**: iOS 12.0+
+- **Tested On**: iOS 15, 16, 17
+- **Devices**: iPhone, iPad
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### Android
+- **Minimum Version**: Android 5.0 (API 21)
+- **Tested On**: Android 11, 12, 13
+- **Devices**: Various screen sizes
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+## 🚀 Key Libraries & Their Purpose
 
-```sh
-bundle install
+| Library | Version | Purpose |
+|---------|---------|---------|
+| `@react-navigation/native` | ^6.x | Navigation framework |
+| `@react-navigation/native-stack` | ^6.x | Stack navigation |
+| `zustand` | ^4.x | State management |
+| `react-hook-form` | ^7.x | Form handling |
+| `zod` | ^3.x | Schema validation |
+| `axios` | ^1.x | HTTP requests |
+| `react-native-image-picker` | ^5.x | Image selection |
+| `react-native-toast-message` | ^2.x | Toast notifications |
+| `react-native-vector-icons` | ^10.x | Icons |
+| `react-native-safe-area-context` | ^4.x | Safe area handling |
+| `react-native-gesture-handler` | ^2.x | Gesture support |
+
+## 🔐 Permissions
+
+### iOS (Info.plist)
+```xml
+<key>NSCameraUsageDescription</key>
+<string>App needs camera access to take pet photos</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>App needs photo library access to select pet photos</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>App needs to save photos to library</string>
 ```
 
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
+### Android (AndroidManifest.xml)
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## 📊 API Integration
 
-```sh
-# Using npm
-npm run ios
+### 1. **Mock API**
+- **Base URL**: `https://69627558d9d64c761907f422.mockapi.io/pets`
+- **Endpoints**:
+  - `GET /pets` - Fetch all pets
+  - `POST /pets` - Add new pet
+  - `PUT /pets/:id` - Update pet
+  - `DELETE /pets/:id` - Delete pet
 
-# OR using Yarn
-yarn ios
+### 2. **Dog CEO API**
+- **Base URL**: `https://dog.ceo/api`
+- **Endpoints**:
+  - `GET /breeds/image/random` - Get random dog image
+
+## 🧪 Testing
+
+### Run Tests
+```bash
+npm test
+# or
+yarn test
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Test Coverage
+```bash
+npm test -- --coverage
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 🚀 Build & Deployment
 
-## Step 3: Modify your app
+### Android APK Build
+```bash
+cd android && ./gradlew assembleRelease
+```
 
-Now that you have successfully run the app, let's make changes!
+### iOS Archive
+1. Open `ios/PetShop.xcworkspace` in Xcode
+2. Select Product → Archive
+3. Distribute via App Store or TestFlight
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## 📝 Code Quality
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### Linting
+```bash
+npm run lint
+```
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### Formatting
+```bash
+npm run format
+```
 
-## Congratulations! :tada:
+### Type Checking
+```bash
+npx tsc --noEmit
+```
 
-You've successfully run and modified your React Native App. :partying_face:
+## 🐛 Troubleshooting
 
-### Now what?
+### Common Issues
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+1. **iOS Build Fails**
+   ```bash
+   cd ios && pod deintegrate && pod install && cd ..
+   ```
 
-# Troubleshooting
+2. **Android Build Fails**
+   ```bash
+   cd android && ./gradlew clean && cd ..
+   ```
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+3. **Metro Bundler Issues**
+   ```bash
+   watchman watch-del-all && rm -rf node_modules && npm install
+   ```
 
-# Learn More
+4. **Cache Issues**
+   ```bash
+   npx react-native start --reset-cache
+   ```
 
-To learn more about React Native, take a look at the following resources:
+### Debugging
+- Use React Native Debugger
+- Enable remote debugging in developer menu
+- Check logs with `console.log()`
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
